@@ -27,4 +27,16 @@ class PrintHandler {
             if(ud) if(selected == 0) return; else selected--;
             else if(!ud) if(selected == (list.size()-1)) return; else selected++;
         }
+        void changepath(bool tf) {
+            if(tf){
+                fs::path dir = list[selected];
+                if(fs::is_directory(list[selected])) fs::current_path(dir);
+                selected = 0;
+            }else {
+                fs::path dir = list[selected];
+                dir = dir.parent_path();
+                fs::current_path("..");
+                selected = 0;
+            }
+        }
 };
