@@ -11,12 +11,21 @@ extern "C" {
 namespace fs = std::filesystem;
 
 void executePlugin(std::string pluginname) {
+    while (!pluginname.empty() && (pluginname.back() == '\r' || pluginname.back() == '\n' || pluginname.back() == ' ')) {
+        pluginname.pop_back();
+    }
+
     lua_State* L = luaL_newstate();
     if(!L) return;
 
     luaL_openlibs(L);
 
-    std::string home = getenv("HOME");
+    const char* homeDir = std::getenv("HOME");
+    if (!homeDir) {
+        lua_close(L);
+        return;
+    }
+    std::string home = homeDir;
 
     if(!fs::exists(home + "/.config/cxp/")) {
         fs::create_directory(home + "/.config/cxp");
