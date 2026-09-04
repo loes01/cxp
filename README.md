@@ -5,7 +5,6 @@ cxp features
 
 + Plugins
 + Mode
-+ Configs (coming soon)
 
 Plugins
 ============
