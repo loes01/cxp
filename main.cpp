@@ -1,4 +1,3 @@
-#include <iostream>
 #include <ncurses.h>
 #include "handlers/print.hpp"
 #include "handlers/mode.hpp"
@@ -18,6 +17,7 @@ int main() {
         if(mode == 0) {
             int key = getch();
             erase();
+            if(key == 'q') break;
             if(key == 'w' || key == KEY_UP) printsys.changeselected(true);
             if(key == 's' || key == KEY_DOWN) printsys.changeselected(false);
             if(key == '\n') printsys.changepath(true);

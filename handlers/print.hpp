@@ -1,3 +1,4 @@
+#pragma once
 #include <string>
 #include <vector>
 #include <filesystem>
@@ -12,7 +13,8 @@ class PrintHandler {
         void get() {
             list.clear();
             for (const auto& entry : fs::directory_iterator(fs::current_path())) {
-                list.push_back(entry.path().filename().string());
+                if(fs::is_directory(entry.path())) list.push_back("/"+entry.path().filename().string());
+                else list.push_back(entry.path().filename().string());
             }
         }
         void print() {
@@ -24,17 +26,22 @@ class PrintHandler {
             }
         }
         void changeselected(bool ud) { //up = true | down = false
-            if(ud) if(selected == 0) return; else selected--;
-            else if(!ud) if(selected == (list.size()-1)) return; else selected++;
+            if(list.empty()) return;
+            if(ud) {
+                if(selected == 0) return;
+                selected--;
+            } else {
+                if(selected == (int)(list.size()-1)) return;
+                selected++;
+            }
         }
         void changepath(bool tf) {
             if(tf){
+                if(list.empty()) return;
                 fs::path dir = list[selected];
-                if(fs::is_directory(list[selected])) fs::current_path(dir);
+                if(fs::is_directory(dir)) fs::current_path(dir);
                 selected = 0;
             }else {
-                fs::path dir = list[selected];
-                dir = dir.parent_path();
                 fs::current_path("..");
                 selected = 0;
             }
