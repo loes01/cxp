@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 cxp is just a minimal file explorer that works in the terminal
 
 cxp features
@@ -24,3 +25,6 @@ Currently 2 commands are available through mode.
  * Commands
    + go (example : "go ~/.config")
    + excplugin (example is in the Plugins section)
+=======
+cxp is a file explorer that runs in the terminal.
+>>>>>>> origin/main
